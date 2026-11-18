@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Smilecare Dental Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--ink:#052326;--deep:#0b3b3c;--teal:#2ec4b6;--mint:#c9f3e8;--coral:#ff7a59;--h:'Sora',system-ui,sans-serif;--b:'Inter',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:70px}
+body{margin:0;background:radial-gradient(120% 80% at 80% 0%,#12595a 0%,#0b3b3c 40%,#052326 100%) fixed;color:#fff;font:400 1rem/1.65 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p{margin:0}a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,footer{position:relative;z-index:1}
+#pre{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-content:center;justify-items:center;gap:20px;transition:opacity .7s,visibility .7s}
+#pre.off{opacity:0;visibility:hidden}
+#pre svg{width:80px;animation:beat 1.1s ease-in-out infinite}
+@keyframes beat{50%{transform:scale(1.14)}}
+#pre p{font:700 1.1rem var(--h);letter-spacing:.3em;padding-left:.3em}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px clamp(20px,4vw,56px);background:rgba(5,35,38,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,243,232,.1)}
+.logo{display:flex;align-items:center;gap:10px;font:800 1.1rem var(--h)}
+.logo i{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--coral);font-style:normal}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:.9rem;font-weight:500}
+nav ul a{opacity:.75}nav ul a:hover{opacity:1}
+.btn{display:inline-block;background:var(--coral);color:var(--ink);font:700 .9rem var(--h);padding:13px 26px;border-radius:999px;border:0;cursor:pointer;box-shadow:0 8px 30px rgba(255,122,89,.35)}
+.btn.g{background:transparent;color:#fff;border:1.5px solid rgba(201,243,232,.4);box-shadow:none}
+@media(max-width:760px){nav ul{display:none}}
+.sec{padding:110px clamp(20px,5vw,64px);max-width:1200px;margin:0 auto}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:100px}
+.hero>*{max-width:560px}
+.pill{align-self:flex-start;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);border:1px solid rgba(201,243,232,.3);padding:7px 14px;border-radius:99px;margin-bottom:22px}
+.hero h1{font:800 clamp(2.5rem,5.6vw,4.8rem)/1.02 var(--h);letter-spacing:-.035em}.hero h1 span{color:var(--teal)}
+.hero p{color:rgba(255,255,255,.72);margin:22px 0 30px;max-width:430px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.k{font-size:.72rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+h2{font:800 clamp(1.9rem,3.8vw,3rem)/1.08 var(--h);letter-spacing:-.03em;margin-bottom:14px}
+.lead{max-width:44ch;color:rgba(255,255,255,.68);margin-bottom:38px}
+.glass{background:rgba(255,255,255,.07);border:1px solid rgba(201,243,232,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:24px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;perspective:1100px}
+.tc{padding:26px;min-height:210px;transform-style:preserve-3d;transition:transform .15s ease-out;position:relative;overflow:hidden}
+.tc::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.14),transparent 60%)}
+.tc b{display:block;font:800 .8rem var(--h);color:var(--coral);letter-spacing:.1em;margin-bottom:14px}
+.tc h3{font:800 1.25rem var(--h);margin-bottom:8px;letter-spacing:-.02em}.tc p{font-size:.88rem;opacity:.72}.tc em{display:block;margin-top:14px;font-style:normal;font-weight:600;color:var(--mint);font-size:.88rem}
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}}@media(max-width:560px){.cards{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+.steps div{padding:24px;counter-increment:s}
+.steps div::before{content:"0" counter(s);font:800 2.3rem var(--h);color:var(--coral)}
+.steps h3{font:700 1.1rem var(--h);margin:8px 0}.steps p{font-size:.86rem;opacity:.68}
+@media(max-width:800px){.steps{grid-template-columns:1fr 1fr}}
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.doc{padding:26px}.av{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font:800 1.3rem var(--h);margin-bottom:14px;background:var(--teal);color:var(--ink)}
+.doc h3{font:800 1.1rem var(--h)}.doc em{display:block;font-style:normal;color:var(--mint);font-size:.84rem;margin:2px 0 8px;font-weight:600}.doc p{font-size:.86rem;opacity:.68}
+@media(max-width:800px){.docs{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;padding:40px 20px}
+.stats b{display:block;font:800 clamp(2rem,4.6vw,3.3rem)/1 var(--h);color:var(--mint)}.stats span{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr;row-gap:30px}}
+.book{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.book dl{margin:24px 0 0}.book dt{color:var(--teal);font-weight:600;margin-top:14px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}.book dd{margin:2px 0 0}
+form{padding:30px;color:var(--ink);background:#fff;border-radius:26px}
+form h3{font:800 1.4rem var(--h);margin-bottom:4px}
+label{display:block;font-weight:600;font-size:.85rem;margin-top:14px}
+input,select{width:100%;margin-top:6px;padding:13px 14px;font:400 1rem var(--b);border:2px solid #d5e4df;border-radius:12px;background:#fff;color:var(--ink)}
+form .btn{width:100%;margin-top:20px}
+@media(max-width:820px){.book{grid-template-columns:1fr}}
+footer{padding:30px 22px 50px;text-align:center;font-size:.82rem;opacity:.65}
+@media(max-width:760px){.hero{justify-content:flex-end;padding-bottom:70px}}
+@media(prefers-reduced-motion:reduce){#pre svg{animation:none}}
+
+.scene{position:relative;z-index:1}
+.stick{position:sticky;top:0;height:100vh;overflow:hidden}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,rgba(5,35,38,.7),transparent 62%),linear-gradient(to top,rgba(5,35,38,.5),transparent 35%)}
+.hs{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:80px 46% 0 6vw;z-index:2}
+.hs h1{font:800 clamp(2.5rem,5.6vw,4.8rem)/1.02 var(--h);letter-spacing:-.035em}.hs h1 span{color:var(--teal)}
+.hs p{color:rgba(255,255,255,.72);margin:22px 0 30px;max-width:430px}
+.hs .pill{align-self:flex-start}
+.story{position:absolute;bottom:14%;max-width:340px;z-index:3;opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s;pointer-events:none}
+.story.on{opacity:1;transform:none}.story.l{left:6vw}.story.r{right:6vw;text-align:right}
+.story h4{margin:0 0 10px;color:var(--coral);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase}
+.story big{display:block;font:800 clamp(1.5rem,2.8vw,2.3rem)/1.08 var(--h);letter-spacing:-.03em;margin-bottom:10px}
+.story p{color:rgba(255,255,255,.8);margin:0}
+@media(max-width:760px){.hs{padding:80px 6vw 14vh;justify-content:flex-end}.story{bottom:9%;max-width:none;left:6vw!important;right:6vw!important;text-align:left!important}}
+.tick{position:fixed;bottom:0;left:0;right:0;z-index:40;height:34px;background:var(--coral);color:var(--ink);overflow:hidden;display:flex;align-items:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+.tick div{display:inline-flex;white-space:nowrap;animation:tk 34s linear infinite}
+.tick span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding-right:70px}
+@keyframes tk{to{transform:translateX(-50%)}}
+footer{padding-bottom:70px}
+/* doctors: flash entry */
+#fl{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.95),rgba(201,243,232,.5) 45%,transparent 75%)}
+#fl.fire{animation:fl .75s ease-out}
+@keyframes fl{0%{opacity:0}12%{opacity:.8}100%{opacity:0}}
+.doc{opacity:0}
+.docs.in .doc{animation:flashin .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*.18s + .1s)}
+@keyframes flashin{0%{opacity:0;transform:scale(.72) translateY(50px);filter:brightness(4) blur(8px)}45%{opacity:1;filter:brightness(2) blur(0)}100%{opacity:1;transform:none;filter:none}}
+@media(prefers-reduced-motion:reduce){.doc{opacity:1}.docs.in .doc{animation:none}.tick div{animation:none}}
+
+.pf{position:relative;height:250px;margin:-6px -6px 18px;border-radius:130px 130px 22px 22px;overflow:hidden;background:linear-gradient(180deg,#1b7a74,#0b3b3c);transition:transform .25s ease-out;transform-style:preserve-3d}
+.pf::before{content:"";position:absolute;inset:-60%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(201,243,232,.55) 85%,transparent 100%);animation:spin 7s linear infinite}
+.pf::after{content:"";position:absolute;inset:3px;border-radius:127px 127px 19px 19px;background:radial-gradient(circle at 50% 30%,#2a9d8f 0,#0f4f4e 70%);}
+.pf svg,.pf img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);z-index:1;border-radius:127px 127px 19px 19px;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.doc:hover .pf svg,.doc:hover .pf img{transform:scale(1.07) translateY(4px)}
+.live{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;display:flex;gap:7px;align-items:center;white-space:nowrap;background:rgba(5,35,38,.8);backdrop-filter:blur(8px);border:1px solid rgba(201,243,232,.25);border-radius:99px;padding:5px 12px;font-size:.7rem;font-weight:600;letter-spacing:.04em}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:#5df0a0;box-shadow:0 0 0 0 rgba(93,240,160,.7);animation:pulse 1.8s infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(93,240,160,0)}100%{box-shadow:0 0 0 0 rgba(93,240,160,0)}}
+.hd{animation:nod 5.5s ease-in-out infinite;transform-origin:100px 175px;transform-box:view-box}
+.bd{animation:breathe 4s ease-in-out infinite;transform-origin:100px 240px;transform-box:view-box}
+.ey{animation:blink 5s infinite;transform-origin:100px 122px;transform-box:view-box}
+@keyframes nod{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes breathe{50%{transform:scaleY(1.012)}}
+@keyframes blink{0%,91%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}
+@media(prefers-reduced-motion:reduce){.pf::before,.hd,.bd,.ey,.live::before{animation:none}}
+</style>
+</head>
+<body>
+<div id="fl" aria-hidden="true"></div>
+<div id="pre"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 8c-7 0-12 6-12 14 0 9 5 12 6 22 1 8 3 14 7 14 4 0 4-12 11-12s7 12 11 12c4 0 6-6 7-14 1-10 6-13 6-22 0-8-5-14-12-14-5 0-8 3-12 3s-7-3-12-3z" fill="#fff"/></svg><p>SMILECARE</p></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<nav><a class="logo" href="#home"><i>✦</i>Smilecare Dental</a>
+<ul><li><a href="#care">Treatments</a></li><li><a href="#how">Process</a></li><li><a href="#team">Doctors</a></li><li><a href="#book">Contact</a></li></ul>
+<a class="btn" href="#book">Book a visit</a></nav>
+<main>
+<div class="scene" id="home" style="height:500vh"><div class="stick"><div class="shade"></div>
+ <div class="hs" id="ht">
+  <span class="pill">Dental clinic · Odisha</span>
+  <h1>Healthy teeth.<br><span>Confident</span><br>smiles.</h1>
+  <p>Gentle, painless dentistry for the whole family, with modern equipment and doctors who explain every step.</p>
+  <div class="row"><a class="btn" href="#book">Book appointment</a><a class="btn g" href="#care">See treatments</a></div>
+ </div>
+ <div class="story r" data-a=".14" data-b=".30"><h4>Listen first</h4><big>Your comfort<br>comes first</big><p>Every visit starts with time to listen, so you always know what happens next.</p></div>
+ <div class="story l" data-a=".38" data-b=".54"><h4>Expert care</h4><big>Specialists,<br>one team</big><p>Implants, braces, root canal and kids dentistry, all under one roof.</p></div>
+ <div class="story r" data-a=".62" data-b=".78"><h4>Modern tech</h4><big>Digital X-ray,<br>zero guesswork</big><p>Clear images and clear explanations, so you choose with confidence.</p></div>
+ <div class="story l" data-a=".84" data-b="1.01"><h4>Your smile</h4><big>Brighter,<br>stronger, yours</big><p>Gentle treatment and follow-up care that keeps your smile healthy.</p></div>
+</div></div>
+<div class="tick"><div><span>✦ Painless root canal &amp; implants</span><span>✦ Braces &amp; clear aligners</span><span>✦ Kids-friendly dentistry</span><span>✦ Digital X-ray, same-day reports</span><span>✦ Painless root canal &amp; implants</span><span>✦ Braces &amp; clear aligners</span><span>✦ Kids-friendly dentistry</span><span>✦ Digital X-ray, same-day reports</span></div></div>
+
+<section class="sec" id="care">
+ <p class="k">Treatments</p><h2>Everything for<br>your smile</h2><p class="lead">Hover a card. Sample treatments and starting prices for the demo.</p>
+ <div class="cards">
+  <div class="tc glass"><b>01</b><h3>Check-up &amp; Cleaning</h3><p>Full exam, scaling and polish to keep gums and teeth healthy.</p><em>From ₹500</em></div>
+  <div class="tc glass"><b>02</b><h3>Root Canal</h3><p>Painless treatment that saves your natural tooth.</p><em>From ₹3,500</em></div>
+  <div class="tc glass"><b>03</b><h3>Braces &amp; Aligners</h3><p>Straighter teeth with metal, ceramic or clear aligners.</p><em>From ₹25,000</em></div>
+  <div class="tc glass"><b>04</b><h3>Teeth Whitening</h3><p>Safe, in-chair whitening for a brighter smile in one visit.</p><em>From ₹4,000</em></div>
+  <div class="tc glass"><b>05</b><h3>Dental Implants</h3><p>Permanent, natural-looking replacement for missing teeth.</p><em>From ₹20,000</em></div>
+  <div class="tc glass"><b>06</b><h3>Kids Dentistry</h3><p>A friendly space where children learn to love the dentist.</p><em>From ₹400</em></div>
+ </div>
+</section>
+
+<section class="sec" id="how">
+ <p class="k">How it works</p><h2>Four calm steps<br>to a better smile</h2><p class="lead">No queues, no surprises.</p>
+ <div class="steps glass">
+  <div><h3>Book</h3><p>Pick a time on WhatsApp or the form.</p></div>
+  <div><h3>Examine</h3><p>Digital X-ray and a clear explanation.</p></div>
+  <div><h3>Treat</h3><p>Gentle care with modern equipment.</p></div>
+  <div><h3>Smile</h3><p>Aftercare tips and follow-up reminders.</p></div>
+ </div>
+</section>
+
+<section class="sec" id="team">
+ <p class="k">Our doctors</p><h2>Hands you can trust</h2><p class="lead">Sample profiles for the demo.</p>
+ <div class="docs" id="docs">
+  <div class="doc glass" style="--i:0"><div class="pf" data-k="0"><span class="live">Available today</span></div><h3>Dr. R. Das</h3><em>Dental Surgeon · BDS, MDS</em><p>Implants and cosmetic dentistry, 12 years’ experience.</p></div>
+  <div class="doc glass" style="--i:1"><div class="pf" data-k="1"><span class="live">Available today</span></div><h3>Dr. S. Mishra</h3><em>Orthodontist · BDS, MDS</em><p>Braces and clear aligners for teens and adults.</p></div>
+  <div class="doc glass" style="--i:2"><div class="pf" data-k="2"><span class="live">Mon · Wed · Fri</span></div><h3>Dr. P. Nayak</h3><em>Paediatric Dentist · BDS</em><p>Gentle, fun care for little smiles.</p></div>
+ </div>
+</section>
+
+<section class="sec"><div class="stats glass"><div><b>12+</b><span>Years of care</span></div><div><b>20k</b><span>Happy smiles</span></div><div><b>6</b><span>Specialists</span></div><div><b>4.9★</b><span>Patient rating</span></div></div></section>
+
+<div class="scene" id="care2" style="height:440vh"><div class="stick"><div class="shade"></div>
+ <div class="story l" data-a=".02" data-b=".26"><h4>Painless</h4><big>Relax.<br>We’ve got you.</big><p>Gentle techniques and numbing so treatment feels easy.</p></div>
+ <div class="story r" data-a=".30" data-b=".52"><h4>Clear aligners</h4><big>Straighten<br>without the wires</big><p>Nearly invisible aligners planned on a 3D scan of your teeth.</p></div>
+ <div class="story l" data-a=".56" data-b=".78"><h4>Whitening</h4><big>One visit,<br>shades brighter</big><p>Safe in-chair whitening for a fresh, confident smile.</p></div>
+ <div class="story r" data-a=".82" data-b="1.01"><h4>Aftercare</h4><big>We stay<br>with you</big><p>Reminders, tips and a doctor on WhatsApp.</p></div>
+</div></div>
+<section class="sec" id="book">
+ <div class="book">
+  <div><p class="k">Book a visit</p><h2>Ready for your<br>best smile?</h2><p class="lead" style="margin-bottom:0">Choose a time and we’ll confirm on WhatsApp.</p>
+   <dl><dt>Hours</dt><dd>Mon–Sat, 9:00 AM – 8:00 PM</dd><dt>Address</dt><dd>Add clinic address, City, Odisha</dd><dt>Phone</dt><dd>+91 00000 00000</dd></dl></div>
+  <form id="f"><h3>Request appointment</h3>
+   <label>Your name<input id="n" required autocomplete="name"></label>
+   <label>Treatment<select id="s"><option>Check-up &amp; Cleaning</option><option>Root Canal</option><option>Braces &amp; Aligners</option><option>Teeth Whitening</option><option>Dental Implants</option><option>Kids Dentistry</option></select></label>
+   <label>Preferred date<input id="d" type="date" required></label>
+   <button class="btn" type="submit">Send on WhatsApp</button></form>
+ </div>
+</section>
+</main>
+<footer>© Smilecare Dental Clinic · Demo website</footer>
+
+<script>
+document.getElementById('f').onsubmit=e=>{e.preventDefault();
+ const t=`Hello, I would like an appointment for ${s.value} on ${d.value}. Name: ${n.value}`;
+ window.open('https://wa.me/910000000000?text='+encodeURIComponent(t),'_blank')};
+document.querySelectorAll('.tc').forEach(c=>{
+ c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  c.style.transform=`rotateX(${(.5-y)*12}deg) rotateY(${(x-.5)*12}deg) scale3d(1.02,1.02,1.02)`;c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});
+ c.addEventListener('pointerleave',()=>c.style.transform='')});
+addEventListener('load',()=>setTimeout(()=>document.getElementById('pre').classList.add('off'),1300));
+setTimeout(()=>document.getElementById('pre').classList.add('off'),3200);
+
+/* 3D tooth: stays on screen and keeps animating for the whole page */
+const cv=document.getElementById('gl');
+if(window.THREE){
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(40,1,.1,100);C.position.set(0,.4,9.5);
+S.add(new THREE.AmbientLight(0xdff8f1,.7));
+const kl=new THREE.DirectionalLight(0xffffff,1.6);kl.position.set(3,5,6);S.add(kl);
+const rl=new THREE.PointLight(0xff7a59,1.6,30);rl.position.set(-5,1,-3);S.add(rl);
+const tl=new THREE.PointLight(0x2ec4b6,1.4,30);tl.position.set(5,-2,3);S.add(tl);
+const enamel=new THREE.MeshPhysicalMaterial({color:0xfffdf8,roughness:.22,metalness:0,clearcoat:1,clearcoatRoughness:.12});
+const tooth=new THREE.Group(),holder=new THREE.Group();holder.add(tooth);S.add(holder);
+const g=new THREE.SphereGeometry(1.25,64,48),pa=g.attributes.position;
+for(let i=0;i<pa.count;i++){let x=pa.getX(i),y=pa.getY(i),z=pa.getZ(i);
+ x*=1.2;
+ if(y>0)y+=.16*Math.cos(x*2.9)*Math.cos(z*3.2)+.04;
+ else{const f=1+y*.2;x*=f;z*=f}
+ pa.setXYZ(i,x,y,z)}
+g.computeVertexNormals();
+const crown=new THREE.Mesh(g,enamel);tooth.add(crown);
+[[-.55,.14],[.55,-.14]].forEach(([x,rz])=>{const rg=new THREE.CylinderGeometry(.5,.12,2,28),r=new THREE.Mesh(rg,enamel);r.position.set(x,-1.85,0);r.rotation.z=rz;tooth.add(r)});
+tooth.position.y=.5;
+// sparkles
+const SN=70,sp=new Float32Array(SN*3),sd=[];for(let i=0;i<SN;i++)sd.push({a:Math.random()*6.28,r:2.2+Math.random()*1.6,y:(Math.random()-.5)*5,s:.2+Math.random()*.5});
+const sgeo=new THREE.BufferGeometry();sgeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+const sparks=new THREE.Points(sgeo,new THREE.PointsMaterial({color:0xc9f3e8,size:.07,transparent:true,opacity:.8,depthWrite:false}));holder.add(sparks);
+function size(){R.setSize(innerWidth,innerHeight,false);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix()}
+addEventListener('resize',size);size();
+const ease=t=>t*t*(3-2*t);let P=0,sc={on:false,p:0,side:null,idx:0};
+const scenes=[...document.querySelectorAll('.scene')];
+function read(){const m=document.documentElement.scrollHeight-innerHeight;P=m>0?Math.min(1,Math.max(0,scrollY/m)):0;
+ const y=scrollY,vh=innerHeight;sc.on=false;
+ scenes.forEach((el,i)=>{const t=el.offsetTop,h=el.offsetHeight;if(y>=t-vh*.5&&y<=t+h){sc.on=true;sc.idx=i;sc.p=Math.min(1,Math.max(0,(y-t)/(h-vh)));sc.side=null;
+  el.querySelectorAll('.story').forEach(q=>{const on=sc.p>=+q.dataset.a&&sc.p<=+q.dataset.b;q.classList.toggle('on',on);if(on)sc.side=q.classList.contains('l')?'l':'r'});
+  const ht=el.querySelector('#ht');if(ht){const o=Math.max(0,1-sc.p/.08);ht.style.opacity=o;ht.style.transform=`translateY(${-40*(1-o)}px)`;ht.style.pointerEvents=o<.2?'none':''}}})}
+addEventListener('scroll',read,{passive:true});read();
+let ry=0,x=0,y=0,s=1,rx=0;const t0=performance.now(),still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function loop(){requestAnimationFrame(loop);const t=still?0:(performance.now()-t0)/1000,mob=innerWidth<760;
+ let tx,ty,ts,tr,trx;
+ if(sc.on){const w=.5-.5*Math.cos(sc.p*Math.PI*8);tx=mob?0:(sc.side==='r'?-2.7:2.7);ty=mob?2.2:Math.sin(sc.p*Math.PI*2)*.3;ts=(mob?.5:1)*(1+(mob?.7:.9)*w);
+  tr=sc.p*Math.PI*8;trx=Math.sin(sc.p*Math.PI*4)*.3}
+ else{tx=mob?0:2.7*Math.cos(P*Math.PI*5);ty=mob?2.2:Math.sin(P*Math.PI*3)*.5;ts=(mob?.5:.8);tr=P*Math.PI*8;trx=Math.sin(P*Math.PI*4)*.3}
+ x+=(tx-x)*.06;y+=(ty-y)*.06;s+=(ts-s)*.06;ry+=(tr+t*.15-ry)*.1;rx+=(trx-rx)*.08;
+ holder.position.set(x,y+Math.sin(t*1.2)*.12,0);holder.scale.setScalar(s);tooth.rotation.set(rx,ry,Math.sin(t*.7)*.05);
+ const pp=sgeo.attributes.position;sd.forEach((q,i)=>{const a=q.a+t*q.s;pp.setXYZ(i,Math.cos(a)*q.r,q.y+Math.sin(t*q.s*2+i)*.3,Math.sin(a)*q.r)});pp.needsUpdate=true;
+ R.render(S,C)}
+loop();
+}else cv.remove();
+
+/* doctor portraits: illustrated placeholders. To use real photos, add a URL or data URI per doctor below. */
+const DOCPHOTOS=[null,null,null];
+const DOCS=[{skin:'#e5b08a',sh:'#cf9870',hair:'#1c1815',st:'short',shirt:'#2ec4b6',glasses:1},
+{skin:'#d89c72',sh:'#c28660',hair:'#2a1710',st:'long',shirt:'#ff7a59',lip:'#b5473f'},
+{skin:'#f0c4a0',sh:'#dcab86',hair:'#4a2a18',st:'short',shirt:'#9be3d4',beard:1}];
+function portrait(o){
+ const hair={short:`<path d="M64 114C58 78 80 64 100 64c22 0 42 14 36 50-6-16-18-24-36-24S70 98 64 114z" fill="${o.hair}"/>`,
+ long:`<path d="M62 120C52 74 80 60 100 60c24 0 50 14 38 60l5 56c-12-8-10-36-9-62-6-18-18-26-34-26s-28 8-34 26c1 26 3 54-9 62z" fill="${o.hair}"/>`}[o.st];
+ return `<svg viewBox="0 0 200 250" role="img" aria-label="Doctor portrait"><g class="bd">
+ <path d="M10 250C10 196 54 176 100 176s90 20 90 74z" fill="#f6fbfa"/><path d="M84 176l16 36 16-36z" fill="${o.shirt}"/>
+ <path d="M84 176l-14 30 30 8zM116 176l14 30-30 8z" fill="#e3eeec"/>
+ <path d="M74 178c-8 34 20 50 38 36" fill="none" stroke="#33474a" stroke-width="3.5" stroke-linecap="round"/><circle cx="114" cy="214" r="7" fill="#cfd8dc" stroke="#33474a" stroke-width="2"/>
+ </g><g class="hd">
+ <rect x="88" y="150" width="24" height="30" rx="8" fill="${o.sh}"/>
+ <circle cx="66" cy="124" r="6.5" fill="${o.skin}"/><circle cx="134" cy="124" r="6.5" fill="${o.skin}"/>
+ ${o.st==='long'?hair:''}
+ <ellipse cx="100" cy="120" rx="34" ry="41" fill="${o.skin}"/>
+ ${o.st==='short'?hair:`<path d="M66 112C70 88 84 82 100 82s30 6 34 30c-8-14-20-20-34-20s-26 6-34 20z" fill="${o.hair}"/>`}
+ ${o.beard?`<path d="M67 128c2 40 64 40 66 0-8 20-58 20-66 0z" fill="${o.hair}" opacity=".92"/>`:''}
+ <g class="ey"><ellipse cx="86" cy="122" rx="3.3" ry="4.2" fill="#1b1b1b"/><ellipse cx="114" cy="122" rx="3.3" ry="4.2" fill="#1b1b1b"/><circle cx="87.2" cy="120.6" r="1.1" fill="#fff"/><circle cx="115.2" cy="120.6" r="1.1" fill="#fff"/></g>
+ <path d="M79 112q7-5 14-1M107 111q7-4 14 1" stroke="${o.hair}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+ <path d="M100 126c-3 8-4 10 0 11" stroke="${o.sh}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ <path d="M88 143q12 9 24 0" stroke="${o.lip||'#a0584a'}" stroke-width="${o.lip?3.4:2.6}" fill="none" stroke-linecap="round"/>
+ <circle cx="78" cy="136" r="6" fill="#ff8a6a" opacity=".16"/><circle cx="122" cy="136" r="6" fill="#ff8a6a" opacity=".16"/>
+ ${o.glasses?`<g fill="none" stroke="#33474a" stroke-width="2.4"><circle cx="86" cy="122" r="10.5"/><circle cx="114" cy="122" r="10.5"/><path d="M96.5 122h7"/></g>`:''}
+ </g></svg>`}
+document.querySelectorAll('.pf').forEach(el=>{const k=+el.dataset.k,u=DOCPHOTOS[k];
+ el.insertAdjacentHTML('afterbegin',u?`<img src="${u}" alt="Doctor photo">`:portrait(DOCS[k]));
+ const c=el.closest('.doc');
+ c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(700px) rotateX(${-y*10}deg) rotateY(${x*12}deg)`});
+ c.addEventListener('pointerleave',()=>el.style.transform='')});
+/* flash entry for doctors */
+const dk=document.getElementById('docs');
+if(dk&&'IntersectionObserver' in window){new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){dk.classList.add('in');if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.getElementById('fl').classList.add('fire');o.disconnect()}},{threshold:.35}).observe(dk)}else if(dk){dk.classList.add('in')}
+</script>
+</body>
+</html>
